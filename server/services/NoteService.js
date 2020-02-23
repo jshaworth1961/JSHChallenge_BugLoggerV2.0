@@ -18,17 +18,20 @@ class NoteService {
         return await _repository.findById(id)
     }
 
+    //this is called from the BugController
     async getNotesByBugId(id) {
 
         return await _repository.find({ bug: id })//bugId
     }
 
-    async getNoteByBugIdAndNoteId(id,noteId)
-    {
+    //this is called from the BugController
+    async getNoteByBugIdAndNoteId(id, noteId) {
         return await _repository.findById(noteId);
     }
 
-    async editNoteByBugIdAndNoteId(bugId,noteId, update)
+    //this is a dead method: it is not being called
+    /*
+    async editNoteByBugIdAndNoteId(bugId,noteId, update) //edit note
     {
         try
         {
@@ -50,30 +53,27 @@ class NoteService {
         }
 
     }
+*/
 
-    async create(rawData) {
+    async create(rawData) //create note
+    {
         return await _repository.create(rawData);
     }
 
-    
 
-    async update(id, update) {
+
+    async update(id, update) //edit note
+    {
         //NOTE {new: true} insures I get the object back after the change
         return await _repository.findByIdAndUpdate(id, update, { new: true });
     }
 
-    async delete(id) {
+    async delete(id) //delete note
+    {
         await _repository.findByIdAndDelete(id);
     }
 
-    async deleteNoteFromBugId(id, noteId) {
-        await _repository.findByIdAndDelete(noteId)
 
-
-        //@ts-ignore
-
-
-    }
 }
 
 const noteService = new NoteService();

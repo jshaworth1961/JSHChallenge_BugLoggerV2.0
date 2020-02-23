@@ -1,3 +1,6 @@
+//This is JSHChallenge Bugger Logger V2.0 Written 2.23.2020
+//It is an Express Server connected to a MongoDb database
+
 // NOTE this is essentially the main portion of our server
 import express from "express";
 import cors from "cors";

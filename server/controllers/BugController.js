@@ -7,17 +7,18 @@ export default class BugController {
   constructor() {
     this.router = express
       .Router()
-      .get("", this.getAll)
-      .get("/:id", this.getById)
-      .get("/:id/notes", this.getNotesByBugId)
-      .get("/:id/notes/:noteId",this.getNoteByBugIdAndNoteId)
-      .post("", this.create)
-      .post("/:id/notes", this.createNoteByBugId)
-      .put("/:id", this.edit)
-      .put("/:id/notes/:noteId",this.editNoteByBugIdAndNoteId)
+      .get("", this.getAll) //gets all Bugs
+      .get("/:id", this.getById) //gets all Bugs by Id
+      .get("/:id/notes", this.getNotesByBugId) //gets all notes associated with a given bug
+      .get("/:id/notes/:noteId",this.getNoteByBugIdAndNoteId) //gets a specific note with a given 
+      //note and bug Ids
+      .post("", this.create) //create a new bug (only allows if bug is open)
+      .post("/:id/notes", this.createNoteByBugId) //creates new note for a bug if the bug is still open
+      .put("/:id", this.edit) //edit a bug only if open
+      .put("/:id/notes/:noteId",this.editNoteByBugIdAndNoteId) //if bug is open can edit an attached note by its id
 
-      .delete("/:id", this.delete)
-      .delete("/:id/notes/:noteId", this.deleteNoteFromBugId)
+      .delete("/:id", this.delete) //if a bug cannot be deleted once open so this is a dead commmand
+      .delete("/:id/notes/:noteId", this.deleteNoteFromBugId) //if bug is not closed a note can be deleted;
   }
 
   async getAll(req, res, next) {
@@ -128,7 +129,7 @@ export default class BugController {
 
   async deleteNoteFromBugId(req, res, next) {
     try {
-      await noteService.deleteNoteFromBugId(req.params.id, req.params.noteId);
+      await bugService.deleteNoteFromBugId(req.params.id, req.params.noteId);
       res.send("Note attached to bug deleted")
     }
     catch (error) {

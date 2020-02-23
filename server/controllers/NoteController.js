@@ -6,12 +6,12 @@ export default class NoteController {
     constructor() {
         this.router = express
             .Router()
-            .get("", this.getAll)
-            .get("/:id", this.getById)
-            .post("", this.create)
-            .put("/:id", this.edit)
+            .get("", this.getAll) //get all notes
+            .get("/:id", this.getById) //get a note by its Id
+            .post("", this.create) //create  new note
+            .put("/:id", this.edit)//edits a note
 
-            .delete("/:id", this.delete);
+            .delete("/:id", this.delete); //deletes a note
     }
 
     async getAll(req, res, next) {
